@@ -1,0 +1,56 @@
+.clock {
+    line-height: 1em;
+    /*font-size: 10em;*/
+}
+.numberSpinner {
+    width: 1ch;
+    height: 1em;
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: top;
+}
+.numberSpinner div {
+    position: relative;
+    transition: top 1s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+}
+.numberSpinner div::before {
+    content: '0 1 2 3 4 5 6 7 8 9';
+}
+.numberSpinner[data-value="0"] div {
+    top: -0em;
+}
+.numberSpinner[data-value="1"] div {
+    top: -1em;
+}
+.numberSpinner[data-value="2"] div {
+    top: -2em;
+}
+.numberSpinner[data-value="3"] div {
+    top: -3em;
+}
+.numberSpinner[data-value="4"] div {
+    top: -4em;
+}
+.numberSpinner[data-value="5"] div {
+    top: -5em;
+}
+.numberSpinner[data-value="6"] div {
+    top: -6em;
+}
+.numberSpinner[data-value="7"] div {
+    top: -7em;
+}
+.numberSpinner[data-value="8"] div {
+    top: -8em;
+}
+.numberSpinner[data-value="9"] div {
+    top: -9em;
+}
+.colon {
+    animation: blink 1s steps(1) infinite;
+}
+@keyframes blink {
+    50% {
+        color: transparent;
+    }
+}

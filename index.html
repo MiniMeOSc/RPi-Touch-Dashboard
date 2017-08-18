@@ -1,0 +1,75 @@
+<!doctype html>
+<html ng-app="dashboardApp">
+    <head>
+        <meta charset="utf-8" />
+        <title>Dashboard</title>
+        
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <!--<script src="js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"></script>-->
+        
+        <!-- Weather Icons -->
+        <link rel="stylesheet" href="css/weather-icons.min.css" />
+        
+        <!-- AngularJS -->
+        <script src="js/angular.min.js"></script>
+        <script src="js/angular-locale_de-de.js"></script>
+
+        <!-- Angular Toaster -->
+        <link rel="stylesheet" href="css/toaster.min.css">
+        <script src="js/toaster.min.js"></script>
+
+        <!-- Custom -->
+        <link rel="stylesheet" href="css/style.css" />
+        <link rel="stylesheet" href="css/spinnerClock.css" />
+        <script src="js/script.js"></script>
+    </head>
+    <body>
+        <div class="col-sm-6" ng-controller="clockController">
+            <div class="col-sm-12 clock">
+                <span class="numberSpinner" data-value="{{hours|limitTo:1:0}}"><div></div></span><span class="numberSpinner" data-value="{{hours|limitTo:1:1}}"><div></div></span><span class="blink">:</span><span class="numberSpinner" data-value="{{minutes|limitTo:1:0}}"><div></div></span><span class="numberSpinner" data-value="{{minutes|limitTo:1:1}}"><div></div></span>
+            </div>
+            <div class="col-sm-12 date">{{date|date:"EEEE, dd. MMMM yyyy"}}</div>
+            <div class="col-sm-4">
+                <span ng-class="'currentWeatherIcon wi wi-owm-' + currentWeather.weather[0].id"></span> 
+            </div>
+            <div class="col-sm-8">
+                <div class="col-sm-12">
+                    <span class="currentTemp">
+                        <i class="wi wi-thermometer"></i>
+                        {{currentWeather.main.temp|number:1}}°C
+                    </span>
+                </div>
+                <div class="col-sm-12 tempRange">
+                    <span class="minTemp">{{forecastWeather.list[0].temp.min|number:1}}°C</span>
+                    -
+                    <span class="maxTemp">{{forecastWeather.list[0].temp.max|number:1}}°C</span>
+                </div>
+                <div class="col-sm-12">{{currentWeather.weather[0].description}}</div>
+            </div>
+        </div>
+        <div class="col-sm-6 powerSwitch" ng-controller="powerswitchController">
+            <div ng-repeat="(room, devices) in rooms">
+                <h1 class="roomHeading">{{room}}</h1>
+                <div class="row" ng-repeat="d in devices">
+                    <div class="col-sm-6">
+                        <h4 class="deviceName">{{d.name}}</h4>
+                    </div>
+                    <div class="col-sm-3 buttons">
+                        <button ng-disabled="d.sending['on']" ng-click="send(d, 'on')" class="btn btn-sm btn-success">
+                            ON
+                            <i ng-style="d.sending['on'] ? {} : {visibility: 'hidden'}" class="glyphicon glyphicon-refresh spinning"></i> 
+                        </button>
+                    </div>
+                    <div class="col-sm-3 buttons">
+                        <button ng-disabled="d.sending['off']" ng-click="send(d, 'off')" class="btn btn-sm btn-danger">
+                            OFF
+                            <i ng-style="d.sending['off'] ? {} : {visibility: 'hidden'}" class="glyphicon glyphicon-refresh spinning"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <toaster-container toaster-options="{'close-button': true}"></toaster-container>
+    </body>
+</html>
